@@ -8,7 +8,7 @@ function App() {
   const apiUrl = `https://api.frankfurter.app/latest?from=${country}`;
 
   return (
-    <div className="text-center bg-amber-200">hello ghost</div>
+    <div className="text-center bg-amber-200">hello ghost </div>
   )
 }
 
