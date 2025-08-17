@@ -9,7 +9,7 @@ function useCurrencyInfo(currency) {
             try {
                 let response = await fetch(`https://api.frankfurter.app/latest?from=${currency}`);
                 let respnseData = await response.json();
-                setData(respnseData);
+                setData(respnseData.rates);
             } catch (err) {
                 console.log("error in api fetching data");
             }

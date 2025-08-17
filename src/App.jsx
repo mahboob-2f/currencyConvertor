@@ -11,10 +11,25 @@ function App() {
   // const apiUrl = `https://api.frankfurter.app/latest?from=${country}`;     => this is working api in this project
 
 
-  const [country, setCountry] = useState("usd");
-  // const data = useCurrencyInfo("usd");
+  const [currency, setCurrency] = useState("usd");
+  const [amount,setAmount]= useState(0)
+  const [from,setFrom]= useState("usd");
+  const [to,setTo] = useState("inr");
+  const [convertedAmount,setConvertedAmount] = useState(0);
 
-  // console.log(data.rates);
+  const currencyInfo = useCurrencyInfo(from);
+  const options = Object.keys(currencyInfo);
+
+  const swapping =()=>{
+    setFrom(to);
+    setTo(from);  
+    setAmount(convertedAmount);
+    setConvertedAmount(amount);
+  }
+
+  const convert = ()=>{
+    setConvertedAmount(amount * options[to]);
+  }
 
 
   return (
@@ -29,7 +44,7 @@ function App() {
             e.preventDefault();
           }}
           >
-            <InputBox></InputBox>
+            <InputBox label="From"   currencyOptions={options} amount={amount}  ></InputBox>
             <p>Swap</p>
             <InputBox></InputBox>
             <div className="w-full bg-blue-500 py-3 mt-4 rounded-lg flex justify-center hover:bg-blue-600
