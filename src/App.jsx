@@ -11,47 +11,59 @@ function App() {
   // const apiUrl = `https://api.frankfurter.app/latest?from=${country}`;     => this is working api in this project
 
 
-  const [currency, setCurrency] = useState("usd");
-  const [amount,setAmount]= useState(0)
-  const [from,setFrom]= useState("usd");
-  const [to,setTo] = useState("inr");
-  const [convertedAmount,setConvertedAmount] = useState(0);
+  const [amount, setAmount] = useState(0)
+  const [from, setFrom] = useState("usd");
+  const [to, setTo] = useState("inr");
+  const [convertedAmount, setConvertedAmount] = useState();
 
   const currencyInfo = useCurrencyInfo(from);
   const options = Object.keys(currencyInfo);
 
-  const swapping =()=>{
+  const swapping = () => {
     setFrom(to);
-    setTo(from);  
+    setTo(from);
     setAmount(convertedAmount);
     setConvertedAmount(amount);
   }
 
-  const convert = ()=>{
+  const convert = () => {
     setConvertedAmount(amount * options[to]);
+  }
+  const onAmountChange = (e) => {
+    setAmount(Number(e.target.value));
+    // console.log(typeof(amount));
+    // console.log(amount);
+  }
+  const onCurrencyChange = (e) => {
+    setAmount(e.target.value);
+    // console.log(e.target.value);
   }
 
 
   return (
     <>
-      <div className="w-screen min-h-screen flex justify-center items-center " style={{backgroundImage:
-       " url('https://images.pexels.com/photos/259249/pexels-photo-259249.jpeg')",backgroundSize:"cover" ,backgroundRepeat:"no-repeat"}} >
+      <div className="w-screen min-h-screen flex justify-center items-center " style={{
+        backgroundImage:
+          " url('https://images.pexels.com/photos/259249/pexels-photo-259249.jpeg')", backgroundSize: "cover", backgroundRepeat: "no-repeat"
+      }} >
         <div className="w-[45%] border-2 border-white rounded-lg p-4 bg-[#ffffff7b]
         ">
 
           <form action="" className="pt-3 px-2"
-          onSubmit={(e)=>{
-            e.preventDefault();
-          }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              convert();
+              console.log("clicked");
+            }}
           >
-            <InputBox label="From"   currencyOptions={options} amount={amount}  ></InputBox>
+            <InputBox label="From" currencyOptions={options} amount={amount} onAmountChange={onAmountChange} onCurrencyChange={onCurrencyChange} ></InputBox>
             <p>Swap</p>
-            <InputBox></InputBox>
+            <InputBox label="To" amount={convertedAmount} currencyOptions={options}></InputBox>
             <div className="w-full bg-blue-500 py-3 mt-4 rounded-lg flex justify-center hover:bg-blue-600
-            transition-all duration-200 group: ">
-              <button className="text-white text-2xl font-serif group " onClick={console.log("clicked")} >Convert{} to{}</button>
+            transition-all duration-200   "  >
+              <button className="text-white text-2xl cursor-pointer font-serif   w-full h-full "   >Convert {from.toUpperCase()} to {to.toUpperCase()}</button>
             </div>
-            
+
           </form>
 
         </div>
